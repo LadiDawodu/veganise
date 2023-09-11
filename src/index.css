@@ -1,0 +1,36 @@
+@import url('https://fonts.cdnfonts.com/css/uber-move-text?styles=70998,70996,70997,70995');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root{
+    font-family: 'Uber Move Text', sans-serif;
+  
+}
+
+/*  DEFUALT CSS STYLING */
+
+li{
+    opacity: .3;
+    cursor: pointer;
+}
+
+body{
+    background: bg-slate-100;
+
+}
+
+singleRestaurant:hover img{
+    transform: scale(1.1);
+    transition: all .7s ease-in-out;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+
+
