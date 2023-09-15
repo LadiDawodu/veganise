@@ -17,9 +17,9 @@ module.exports = {
       },
 
       colors: {
-        sideMenuBg: '#1c1c1c',
-        bodyBg: '#ffff',
-        titleColor: '#384225',
+        sideMenuBg: '#000000',
+        bodyBg: '#fff',
+        titleColor: '#0F0F0F',
         hoverColor: '#262626',
         textColor: '#f2f2f2',
         coloeOne: '#a4e687',
