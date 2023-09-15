@@ -1,7 +1,7 @@
 import React from 'react'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {AiOutlineAppstoreAdd} from 'react-icons/ai'
-import veganBurger from '../../Assets/veganBurger.jpg'
+import veganBurger from '../../Assets/veganBurger.svg'
 
 const Body = () => {
   return (
@@ -50,9 +50,16 @@ const Body = () => {
       {/* categories Div */}
       <div className='flex mt-8 items-centergap-10'>
         <div className='singleCategory items-center justify-between text-center'>
+          
           <div className='imDiv h-[40px] w-[40px] bg-[#fff] rounded-full flex items-center justify-center m-auto p-1'>
             <img src={veganBurger} alt="vegan Burger" className='w-[70%] flex justify-center m-auto' />
           </div>
+
+          <span>
+            
+          </span>
+
+
 
         </div>
 
