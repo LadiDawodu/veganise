@@ -22,14 +22,25 @@ body{
 
 }
 
-singleRestaurant:hover img{
+.singleRestaurant:hover img{
     transform: scale(1.1);
-    transition: all .7s ease-in-out;
+    transition: transform 0.7s ease-in-out ;
+}
+.singleRestaurant img{
+    transform: scale(1);
+    transition: transform 0.7s ease-out
+
 }
 
 ::-webkit-scrollbar{
     display: none;
 }
+
+.restaurantContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Adjust the gap value as needed */
+  }
 
 
 

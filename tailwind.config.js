@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       flexBasis: {
         20: '20%', //SideMenu
-        80:  '80%', //The Body
+        80:  '80%' //The Body
       },
 
       height: {
@@ -22,10 +22,10 @@ module.exports = {
         titleColor: '#0F0F0F',
         hoverColor: '#262626',
         textColor: '#f2f2f2',
-        coloeOne: '#a4e687',
-        colorTwo: '#627346',
-        colorThree: '#aabf71',
-        colorFour: '#fcf8ef',
+        colorOne: '#d9dbc142',
+        colorTwo: '#8f9779',
+        colorThree: '#C3C6A855',
+        colorFour: '#a2a54942',
         gradient: 'linear-gradient(rgb(156, 204, 176)), (rgb(196, 204, 176))',
       },
 
