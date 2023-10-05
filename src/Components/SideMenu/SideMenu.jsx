@@ -9,69 +9,62 @@ import mapImage from "../../Assets/mapImage.jpeg";
 
 const SideMenu = () => {
   return (
-    <div className="bg-sideMenuBg relative h-[100%] basis-20 p-4">
+    <div className=" bg-bodyBg relative flex flex-col items-center  basis-30 p-5 w-full">
       {/* LOGO */}
-      <div className="logo mt-4 gap-2 text-white flex items-center justify-center m-auto">
-        <GiHamburger className="text-[10px]" />
-        <h1 className="text-[20px] align-center justify-center font-black">
-          {" "}
-          Veganer
-        </h1>
+      <div className="logo mt-4 gap-2 text-white flex justify-center items-center ">
       </div>
-      {/* User Div */}
-      <div className="flex items-center justify-center text-[white] flex-col mt-[3rem] admin">
-        <img
-          src={adminImage}
-          alt="Admin Image"
-          className="h-[80px] w-[80px] border-grey-400 border-[4px] object-cover rounded-full hover:-translate-y-1 hover:transition duration-500 ease-in"
-        />
-        <span className="opacity-90 mt-2 text-neutral-200"> Welcome, </span>
-        <h3 className="font-bold text-textColor"> User</h3>
+      <div className="flex  mt-[3rem]">
+        {/* User Div & Menu */}
+        <div className=" flex flex-col text-[white] items-center admin">
+          <img
+            src={adminImage}
+            alt="Admin Image"
+            className="h-[80px] w-[80px] border-grey-400 border-[4px] object-cover rounded-full hover:-translate-y-1 hover:transition duration-500 ease-in"
+          />
+          <span className="opacity-90 mt-2 text-neutral-200 items-center pl-3">
+            {" "}
+            Welcome,{" "}
+          </span>
+          <h3 className="font-bold text-textColor items-center pl-3"> User</h3>
 
-        {/* Single Menu*/}
+          {/* Single Menu*/}
 
-        <div className="m-auto grid justify-center mt-10 mb-7">
-          <li
-            className="flex pt-3 pb-3 pl-3 gap-2 transition-opacity
+          <div className=" grid  mt-10 mb-7">
+            <li
+              className="flex pt-3 pb-3 pl-3 gap-2 transition-opacity
             duration-500 hover:opacity-100 items-center"
-          >
-            <AiFillHome className="text-white" />
-            <span className="text-textColor">Home</span>
-          </li>
+            >
+              <AiFillHome className="text-white" />
+              <span className="text-textColor">Home</span>
+            </li>
 
-          <li
-            className="flex pt-3 pb-3 pl-3 gap-2 transition-opacity
+            <li
+              className="flex pt-3 pb-3 pl-3 gap-2 transition-opacity
             duration-500  hover:opacity-100 items-center"
-          >
-            <BiRestaurant className="text-white" />
-            <span className="text-textColor">Catergory</span>
-          </li>
+            >
+              <BiRestaurant className="text-white" />
+              <span className="text-textColor">Catergory</span>
+            </li>
 
-          <li
-            className="flex pt-3 pb-3 pl-3 gap-2
+            <li
+              className="flex pt-3 pb-3 pl-3 gap-2
             duration-500  transition-opacity hover:opacity-100 items-center"
-          >
-            <BsFillBookmarkStarFill className="text-white" />
-            <span className="text-textColor">Reservations</span>
-          </li>
+            >
+              <BsFillBookmarkStarFill className="text-white" />
+              <span className="text-textColor">Reservations</span>
+            </li>
 
-          <li
-            className="flex pt-3 pb-3 pl-3 gap-2
+            <li
+              className="flex pt-3 pb-3 pl-3 gap-2
             duration-500      transition-opacity hover:opacity-100 items-center"
-          >
-            <AiFillHeart className="text-white" />
-            <span className="text-textColor">Favourites</span>
-          </li>
+            >
+              <AiFillHeart className="text-white" />
+              <span className="text-textColor">Favourites</span>
+            </li>
+          </div>
         </div>
 
         {/* Sidemenu Map Div */}
-        <div className="mt-5 h-[22rem] w-full rounded-xl overflow-hidden">
-          <img
-            src={mapImage}
-            alt="map Image"
-            className="object-cover h-[100%] hover:-translate-y-1 hover:transition duration-500"
-          />
-        </div>
       </div>
     </div>
   );

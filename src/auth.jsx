@@ -1,19 +1,20 @@
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+import {auth  } from './firebase.jsx'
+import { createUserWithEmailAndPassword, sendEmailVerification  } from 'firebase/auth'
 
-const auth = getAuth();
-
-const signIn = async (email, password) => {
+const signUp = async (email, password) => {
 
     try{
-        const userCredential = await signInWithEmailAndPassword(auth,email,password)
+        const userCredential = await createUserWithEmailAndPassword (auth,email,password)
         const user = userCredential.user
+
+        await sendEmailVerification(auth.currentUser)
 
         return user
     }
     catch(error){
-        console.error('login error:', error)
+        console.error('registration error:', error)
         throw error
     }
 }
 
-export {signIn};
+export {signUp, auth, sendEmailVerification};

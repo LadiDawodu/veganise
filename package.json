@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@materializecss/materialize": "^2.0.3-alpha",
     "firebase": "^10.4.0",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^18.2.0",
