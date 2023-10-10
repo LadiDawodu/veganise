@@ -4,11 +4,23 @@ import { AiOutlineSearch, AiOutlineAppstoreAdd } from "react-icons/ai";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import veganiseLogo from "../../Assets/veganiseLogo.jpeg";
-import Registration from "../Registration/Registration";
 
-const Navbar = () => {
+import RegistrationModal from "../Registration/RegistrationModal";
+import LoginModal from "../../LoginModal/LoginModal";
+
+const Navbar = ({ navigate }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isRegistration, setRegistrationOpen] = useState(false);
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
+  const [isLoginOpen, setLoginOpen] = useState(false);
+
+  const toggleRegistrationModal = () => {
+    setIsRegistrationOpen(!isRegistrationOpen);
+  };
+
+  const toggleLoginModal = () => {
+    setLoginOpen(!isLoginOpen);
+  };
   return (
     <Disclosure as="nav" className="bg-bodyBg">
       {({ open }) => (
@@ -71,6 +83,7 @@ const Navbar = () => {
                       type="text"
                       className="pl-10 pr-4 py-2 rounded-full border-2 border-colorTwo/75 focus:ring-colorTwo focus:border-colorTwo h-10 w-[32rem]"
                       placeholder="What's your craving?"
+                      id="searchbar"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -82,18 +95,37 @@ const Navbar = () => {
               </div>
 
               <div className="flex space-x-4 mt-2">
+                <div className="flex gap-4 items-center">
+                  <button
+                    onClick={toggleRegistrationModal}
+                    className="transition-colors hover:bg-[#808000] duration-700 ease-in-out text-gray-600  hover:text-white rounded-full px-3 py-2 text-sm font-medium border-2 cursor-pointer border-colorTwo/75"
+                  >
+                    Sign Up
+                  </button>
+                  {isRegistrationOpen && (
+                    <RegistrationModal
+                      isOpen={isRegistrationOpen}
+                      onClose={toggleRegistrationModal}
+                      navigate={navigate}
+                    />
+                  )}
+                </div>
 
-              <div className="flex gap-4 items-center">
-                <button className="transition-colors hover:bg-[#808000] duration-700 ease-in-out text-gray-600  hover:text-white rounded-full px-3 py-2 text-sm font-medium border-2 cursor-pointer border-colorTwo/75">
-                  Sign Up
-                </button>
-              </div>
-
-              <div className="flex gap-4 items-center">
-                <button className="login transition-colors hover:bg-[#808000] duration-700 ease-in-out cursor-pointer text-gray-600 hover:text-white text-sm font-medium py-2 px-3 rounded-full border-2 border-colorTwo/75  " >
-                  Login In
-                </button>
-              </div>
+                <div className="flex gap-4 items-center">
+                  <button
+                    onClick={toggleLoginModal}
+                    className="login transition-colors hover:bg-[#808000] duration-700 ease-in-out cursor-pointer text-gray-600 hover:text-white text-sm font-medium py-2 px-3 rounded-full border-2 border-colorTwo/75  "
+                  >
+                    Login In
+                  </button>
+                  {isLoginOpen && (
+                    <LoginModal
+                      isOpen={isLoginOpen}
+                      onClose={toggleLoginModal}
+                      navigate={navigate}
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 mt-2">

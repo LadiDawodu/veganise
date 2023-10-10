@@ -232,7 +232,6 @@ const Body = () => {
         </div>
 
         <div className="restaurantContainer py-8 flex justify-between items-center">
-
           {/* Restaurant 1 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorThree p-3 rounded-[10px] mr-4">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
@@ -266,9 +265,7 @@ const Body = () => {
             </div>
           </div>
 
-
-
-            {/* Restaurant 2 */}
+          {/* Restaurant 2 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorTwo p-3 rounded-[10px] mr-4">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
               <img
@@ -299,8 +296,7 @@ const Body = () => {
               </div>
             </div>
           </div>
-          
-          
+
           {/* Restaurant 3 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorFour p-3 rounded-[10px] mr-4">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
@@ -333,10 +329,6 @@ const Body = () => {
             </div>
           </div>
 
-
-
-
-
           {/* Restaurant 4 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorOne p-3 rounded-[10px]">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
@@ -370,8 +362,6 @@ const Body = () => {
             </div>
           </div>
 
-
-
           {/* Restaurant 5 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorOne p-3 rounded-[10px]">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
@@ -404,7 +394,6 @@ const Body = () => {
               </div>
             </div>
           </div>
-
 
           {/* Restaurant 6 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorOne p-3 rounded-[10px]">
@@ -472,8 +461,6 @@ const Body = () => {
             </div>
           </div>
 
-
-
           {/* Restaurant 5 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorOne p-3 rounded-[10px]">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
@@ -507,7 +494,6 @@ const Body = () => {
             </div>
           </div>
 
-
           {/* Restaurant 6 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorOne p-3 rounded-[10px]">
             <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
@@ -539,7 +525,7 @@ const Body = () => {
                 <h4 className="font-semibold ">3.4</h4>
               </div>
             </div>
-          </div>          
+          </div>
         </div>
       </div>
     </div>

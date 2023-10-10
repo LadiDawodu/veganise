@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-import { signUp } from "../../auth.jsx";
+import { signIn } from "../../auth.jsx";
 
-import RegistrationModal from "./RegistrationModal.jsx";
+import LoginModal from "./LoginModal.jsx";
 
-function Registration() {
+function Login() {
   const [isOpen, setIsOpen] = useState(false);
-  const [registrationError, setRegistrationError] = useState(null);
+  const [loginError, setLoginError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,23 +16,26 @@ function Registration() {
     setIsOpen(!isOpen);
   };
 
-  const handleRegistration = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
-      await signUp(formData.email, formData.password);
+      const user = await signIn(formData.email, formData.password);
+      console.log("hmmmmmm");
+
+      await user.sendEmailVerification();
 
       alert("SignUp successful");
 
       setIsOpen(false);
     } catch (error) {
       console.error("signup error:", error.message);
-      setRegistrationError(error.message);
+      setLoginError(error.message);
     }
   };
 
   return (
     <div className="registration">
-      <form onSubmit={(e) => handleRegistration(e)}>
+      <h1>Log in with email</h1>
+      <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
           <input
@@ -61,11 +64,11 @@ function Registration() {
         </div>
         <button type="submit"> Sign Up</button>
       </form>
-      {registrationError && <p> Error:{registrationError}</p>}
+      {loginError && <p> Error:{loginError}</p>}
       <button onClick={toggleModal}></button>
-      <RegistrationModal isOpen={isOpen} onClose={toggleModal} />
+      <LoginModal isOpen={isOpen} onClose={toggleModal} />
     </div>
   );
 }
 
-export default Registration;
+export default Login;
