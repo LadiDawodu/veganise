@@ -8,6 +8,9 @@ function Registration() {
   const [isOpen, setIsOpen] = useState(false);
   const [registrationError, setRegistrationError] = useState(null);
   const [formData, setFormData] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -19,7 +22,13 @@ function Registration() {
   const handleRegistration = async (e) => {
     e.preventDefault();
     try {
-      await signUp(formData.email, formData.password);
+      await signUp(
+        formData.username,
+        formData.firstName,
+        formData.lastName,
+        formData.email,
+        formData.password
+      );
 
       alert("SignUp successful");
 
@@ -33,6 +42,60 @@ function Registration() {
   return (
     <div className="registration">
       <form onSubmit={(e) => handleRegistration(e)}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="username"
+            value={formData.username}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
+            required
+          />
+        </div>
+        <div>
+          <label>First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={(e) =>
+              setFormData({ ...formData, firstName: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        <div>
+          <label>Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={(e) =>
+              setFormData({ ...formData, lastName: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            required
+          />
+        </div>
         <div>
           <label>Email:</label>
           <input

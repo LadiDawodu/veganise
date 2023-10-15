@@ -6,31 +6,41 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { db } from "./firebase.jsx";
+import { ref, set } from "firebase/database";
 
-const signUp = async (email, password, firstName, lastName) => {
+const signUp = async (username, firstName, lastName, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
+
     const user = userCredential.user;
+    const userUID = username;
 
     if (user) {
-      await db.ref(`user/$user.uid`).set({
+      await updateProfile(user, {
+        displayName: username,
+      });
+
+      const userData = {
+        username: username,
         firstName: firstName,
         lastName: lastName,
-      });
+        email: email,
+      };
 
-      await updateProfile(user, {
-        displayName: `${firstName} ${lastName}`,
-      });
+      await set(ref(db, `user/${userUID}`), userData);
 
-      await sendEmailVerification(auth.currentUser);
+      if (user) {
+        await sendEmailVerification(auth.currentUser);
+      }
+
+      alert("You have successfully signed up");
+
+      return user;
     }
-    alert("You have successfully signed up");
-
-    return user;
   } catch (error) {
     console.error("registration error", error);
     throw error;
@@ -45,12 +55,19 @@ const signIn = async (email, password) => {
       password
     );
     const user = userCredential;
+    const username = user.displayName;
 
-    alert("You have successfuly logged in");
+    if (user) {
+      await updateProfile(user, {
+        displayName: username,
+      });
 
-    return user;
+      alert("You have successfuly logged in");
+
+      return user;
+    }
   } catch (error) {
-    console.error("login error:", error);
+    console.error("login error:", error.code, error.message);
     throw error;
   }
 };

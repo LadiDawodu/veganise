@@ -6,30 +6,44 @@ import { BiRestaurant } from "react-icons/bi";
 import { BsFillBookmarkStarFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import mapImage from "../../Assets/mapImage.jpeg";
-import { auth, db } from "../../firebase.jsx";
+import { auth } from "../../firebase.jsx";
+import { db } from "../../firebase.jsx";
 
 const SideMenu = ({ authenticated }) => {
-  const [userDisplayName, setDisplayName] = useState("");
+  const [userDisplayName, setDisplayName] = useState("User");
 
   useEffect(() => {
     if (authenticated) {
       const user = auth.currentUser;
-      const userId = user.id;
 
-      db.ref(`users/${userId}`)
-        .once("value")
-        .then((snapshot) => {
-          const userData = snapshot.val();
-          if (userData) {
-            const fullName = `${userData.firstName} ${userData.lastName}`;
-            setDisplayName(fullName);
-          }
-        })
-        .catch((error) => {
-          console.error("Error getting user data", error);
-        });
+      if (user) {
+        const displayName = user.displayName;
+        console.log("User.displayName from Firebase:", displayName);
+
+        if (displayName) {
+          setDisplayName(displayName);
+        } else {
+          const userId = user.uid;
+          const userRef = db.ref("user/" + userId);
+
+          userRef
+            .once("value")
+            .then((snapshot) => {
+              const userData = snapshot.val();
+
+              if (userData) {
+                const fullName = `${userData.firstName} ${userData.lastName}`;
+                console.log("fullName from user data:", fullName);
+                setDisplayName(fullName);
+              }
+            })
+            .catch((error) => {
+              console.error("Error user data wrong", error);
+            });
+        }
+      }
     }
-  }, [authenticated]);
+  }, [authenticated, userDisplayName]);
 
   return (
     <div className=" bg-bodyBg relative flex flex-col items-center  basis-30 p-5 w-full">
@@ -37,10 +51,10 @@ const SideMenu = ({ authenticated }) => {
       <div className="logo mt-4 gap-2 text-white flex justify-center items-center "></div>
       <div className="flex  mt-[3rem]">
         {/* User Div & Menu */}
-        <div className=" flex flex-col text-[white] items-center admin">
+        <div className=" username flex flex-col text-[white] items-center admin">
           <span className="opacity-90 mt-2 text-neutral-200 items-center pl-3">
             <h3 className="font-bold text-textColor items-center pl-3">
-              {authenticated ? `Welcome, ${userDisplayName || "User"}` : "User"}
+              {authenticated ? `Welcome, ${userDisplayName}` : "Welcome, User"}
             </h3>
           </span>
 

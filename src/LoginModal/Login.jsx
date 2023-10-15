@@ -1,72 +1,83 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signIn, auth } from "../auth.jsx";
+import { LoginModal } from "./LoginModal.jsx";
 
-import { signIn } from "../../auth.jsx";
+const pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-import LoginModal from "./LoginModal.jsx";
-
-function Login() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [loginError, setLoginError] = useState(null);
+function Login({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const [loginError, setLoginError] = useState(null);
+  const [emailValidationError, setEmailValidationError] = useState(null);
 
-  const handleLogin = async () => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!pattern.test(formData.email)) {
+      setEmailValidationError("Please enter a valid email address.");
+      return; // Exit the function if email is not valid
+    } else {
+      setEmailValidationError(null); // Clear any previous error message
+    }
+
     try {
-      const user = await signIn(formData.email, formData.password);
-      console.log("hmmmmmm");
+      await signIn(formData.email, formData.password);
 
-      await user.sendEmailVerification();
+      const user = auth.currentUser;
 
-      alert("SignUp successful");
-
-      setIsOpen(false);
+      navigate("/");
     } catch (error) {
-      console.error("signup error:", error.message);
+      console.error("login error:", error.code, error.message);
       setLoginError(error.message);
     }
   };
 
+  if (!isOpen) return null;
   return (
-    <div className="registration">
-      <h1>Log in with email</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            required
-          />
-        </div>
+    <div className="modal">
+      <div className="modal-content">
+        <h1>Log in with email</h1>
+        <form onSubmit={(e) => handleLogin(e)}>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              required
+            />
+            {emailValidationError && (
+              <p className="text-red-500">{emailValidationError}</p>
+            )}
+          </div>
 
-        <div>
-          <label>Password:</label>
+          <div>
+            <label>Password:</label>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            required
-          />
-        </div>
-        <button type="submit"> Sign Up</button>
-      </form>
-      {loginError && <p> Error:{loginError}</p>}
-      <button onClick={toggleModal}></button>
-      <LoginModal isOpen={isOpen} onClose={toggleModal} />
+            <input
+              type="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              required
+            />
+          </div>
+          <button type="submit"> Done </button>
+        </form>
+        {loginError && <p>Error: {loginError}</p>}
+        <button onClick={onClose}> Exit </button>
+      </div>
     </div>
   );
 }

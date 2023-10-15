@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn, sendEmailVerification, auth } from "../auth";
-import { updateProfile } from "firebase/auth";
+import { signIn, sendEmailVerification, auth } from "../auth.jsx";
+
+const pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 function LoginModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -10,11 +11,20 @@ function LoginModal({ isOpen, onClose }) {
   });
 
   const [loginError, setLoginError] = useState(null);
+  const [emailValidationError, setEmailValidationError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!pattern.test(formData.email)) {
+      setEmailValidationError("Please enter a valid email address.");
+      return; // Exit the function if email is not valid
+    } else {
+      setEmailValidationError(null); // Clear any previous error message
+    }
+
     try {
       await signIn(formData.email, formData.password);
 
@@ -22,7 +32,7 @@ function LoginModal({ isOpen, onClose }) {
 
       navigate("/");
     } catch (error) {
-      console.error("login error:", error.message);
+      console.error("login error:", error.code, error.message);
       setLoginError(error.message);
     }
   };
@@ -44,6 +54,9 @@ function LoginModal({ isOpen, onClose }) {
               }
               required
             />
+            {emailValidationError && (
+              <p className="text-red-500">{emailValidationError}</p>
+            )}
           </div>
 
           <div>

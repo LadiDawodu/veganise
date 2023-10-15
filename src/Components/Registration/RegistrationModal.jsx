@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUp } from "../../auth";
+import { signUp } from "../../auth.jsx";
 
 function RegistrationModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -17,7 +18,13 @@ function RegistrationModal({ isOpen, onClose }) {
   const handleRegistration = async (e) => {
     e.preventDefault();
     try {
-      signUp(formData.email, formData.password);
+      signUp(
+        formData.username,
+        formData.firstName,
+        formData.lastName,
+        formData.email,
+        formData.password
+      );
 
       navigate("/");
     } catch (error) {
@@ -33,9 +40,23 @@ function RegistrationModal({ isOpen, onClose }) {
         <h1>Sign up with email</h1>
         <form onSubmit={(e) => handleRegistration(e)}>
           <div>
+            <label>Username:</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="username"
+              value={formData.username}
+              onChange={(e) =>
+                setFormData({ ...formData, username: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div>
             <label>First Name:</label>
             <input
               type="text"
+              id="firstName"
               placeholder="First Name"
               value={formData.firstName}
               onChange={(e) =>
@@ -49,6 +70,7 @@ function RegistrationModal({ isOpen, onClose }) {
             <label>Last Name:</label>
             <input
               type="text"
+              id="lastName"
               placeholder="Last Name"
               value={formData.lastName}
               onChange={(e) =>
@@ -62,6 +84,7 @@ function RegistrationModal({ isOpen, onClose }) {
             <label>Email:</label>
             <input
               type="email"
+              id="email"
               placeholder="Email"
               value={formData.email}
               onChange={(e) =>
@@ -85,7 +108,9 @@ function RegistrationModal({ isOpen, onClose }) {
             />
           </div>
 
-          <button type="submit">Done</button>
+          <button type="submit" id="submit">
+            Done
+          </button>
         </form>
         {registrationError && <p>Error: {registrationError}</p>}
         <button onClick={onClose}> Exit </button>
