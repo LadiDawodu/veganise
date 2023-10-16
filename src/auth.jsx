@@ -16,6 +16,11 @@ const signUp = async (username, firstName, lastName, email, password) => {
       password
     );
 
+    const userLoggedIn = auth.currentUser;
+    if (userLoggedIn) {
+      throw new Error("You are already signed in.");
+    }
+
     const user = userCredential.user;
     const userUID = username;
 
@@ -54,18 +59,12 @@ const signIn = async (email, password) => {
       email,
       password
     );
-    const user = userCredential;
+    const user = userCredential.user;
     const username = user.displayName;
 
-    if (user) {
-      await updateProfile(user, {
-        displayName: username,
-      });
+    alert("You have successfuly logged in");
 
-      alert("You have successfuly logged in");
-
-      return user;
-    }
+    console.log(username);
   } catch (error) {
     console.error("login error:", error.code, error.message);
     throw error;

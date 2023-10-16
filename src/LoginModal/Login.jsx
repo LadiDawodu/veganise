@@ -32,6 +32,8 @@ function Login({ isOpen, onClose }) {
       const user = auth.currentUser;
 
       navigate("/");
+
+      console.log(user);
     } catch (error) {
       console.error("login error:", error.code, error.message);
       setLoginError(error.message);

@@ -30,6 +30,7 @@ function LoginModal({ isOpen, onClose }) {
 
       const user = auth.currentUser;
 
+      console.log(user);
       navigate("/");
     } catch (error) {
       console.error("login error:", error.code, error.message);

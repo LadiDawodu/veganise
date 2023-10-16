@@ -5,16 +5,15 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import Container from "./Components/Container";
+import Container from "./Components/Container.jsx";
 import Body from "./Components/Body/Body.jsx";
 import SideMenu from "./Components/SideMenu/SideMenu.jsx";
-import Registration from "./Components/Registration/Registration.jsx";
-
-import Navbar from "./Components/Navbar/Navbar";
-import { auth } from "./firebase";
+import RegistrationModal from "./Components/Registration/RegistrationModal.jsx";
+import Navbar from "./Components/Navbar/Navbar.jsx";
+import { auth } from "./firebase.jsx";
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -29,6 +28,11 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+  if (authenticated === undefined) {
+    console.log("no user");
+    return <p>Woow...</p>;
+  }
+  console.log("authenticated:", authenticated);
   return (
     <Router>
       <div>
@@ -43,11 +47,15 @@ function App() {
                 path="/menu"
                 element={<SideMenu authenticated={authenticated} />}
               />
+              <Route
+                path="/menu"
+                element={
+                  authenticated !== undefined && (
+                    <SideMenu authenticated={authenticated} />
+                  )
+                }
+              />
             </Route>
-            <Route
-              path="/registration"
-              element={<Registration authenticated={authenticated} />}
-            />
           </Routes>
         </div>
       </div>

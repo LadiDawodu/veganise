@@ -10,18 +10,19 @@ import { auth } from "../../firebase.jsx";
 import { db } from "../../firebase.jsx";
 
 const SideMenu = ({ authenticated }) => {
-  const [userDisplayName, setDisplayName] = useState("User");
+  const [userDisplayName, setDisplayName] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (authenticated) {
-      const user = auth.currentUser;
-
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log(userDisplayName);
       if (user) {
         const displayName = user.displayName;
         console.log("User.displayName from Firebase:", displayName);
 
         if (displayName) {
           setDisplayName(displayName);
+          setLoading(false);
         } else {
           const userId = user.uid;
           const userRef = db.ref("user/" + userId);
@@ -36,14 +37,24 @@ const SideMenu = ({ authenticated }) => {
                 console.log("fullName from user data:", fullName);
                 setDisplayName(fullName);
               }
+
+              setLoading(false);
+              console.log(userDisplayName);
             })
             .catch((error) => {
               console.error("Error user data wrong", error);
+              setLoading(false);
             });
         }
+      } else {
+        setLoading(false);
       }
-    }
-  }, [authenticated, userDisplayName]);
+    });
+
+    return () => unsubscribe(); // Clean up the observer on unmount
+  }, [authenticated]);
+
+  console.log("authenticated:", authenticated);
 
   return (
     <div className=" bg-bodyBg relative flex flex-col items-center  basis-30 p-5 w-full">
@@ -54,7 +65,7 @@ const SideMenu = ({ authenticated }) => {
         <div className=" username flex flex-col text-[white] items-center admin">
           <span className="opacity-90 mt-2 text-neutral-200 items-center pl-3">
             <h3 className="font-bold text-textColor items-center pl-3">
-              {authenticated ? `Welcome, ${userDisplayName}` : "Welcome, User"}
+              {loading ? "Loading..." : `Welcome, ${userDisplayName}`}
             </h3>
           </span>
 
