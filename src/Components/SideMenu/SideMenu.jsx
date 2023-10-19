@@ -65,7 +65,10 @@ const SideMenu = ({ authenticated }) => {
         <div className=" username flex flex-col text-[white] items-center admin">
           <span className="opacity-90 mt-2 text-neutral-200 items-center pl-3">
             <h3 className="font-bold text-textColor items-center pl-3">
-              {loading ? "Loading..." : `Welcome, ${userDisplayName}`}
+              {loading
+                ? "Loading..."
+                : `Welcome,
+               ${userDisplayName}`}
             </h3>
           </span>
 
