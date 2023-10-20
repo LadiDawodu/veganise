@@ -11,8 +11,27 @@ import SideMenu from "./Components/SideMenu/SideMenu.jsx";
 import RegistrationModal from "./Components/Registration/RegistrationModal.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import { auth } from "./firebase.jsx";
+import axios from "axios";
 
 function App() {
+  const [restaurantData, setRestaurantData] = useState([]);
+
+  useEffect(() => {
+    const apiUrl =
+      "https://api.yelp.com/v3/businesses/search?location=London&term=Vegan Restaurant&categories=Vegan";
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data);
+
+        setRestaurantData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+  }, []);
+
   const [authenticated, setAuthenticated] = useState(null);
 
   useEffect(() => {
@@ -42,11 +61,16 @@ function App() {
           <Routes>
             <Route path="/" element={<Container />}>
               {/* Nested routes */}
-              <Route index element={<Body authenticated={authenticated} />} />
               <Route
-                path="/menu"
-                element={<SideMenu authenticated={authenticated} />}
+                index
+                element={
+                  <Body
+                    authenticated={authenticated}
+                    restaurantData={restaurantData}
+                  />
+                }
               />
+
               <Route
                 path="/menu"
                 element={

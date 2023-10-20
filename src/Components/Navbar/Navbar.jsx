@@ -6,7 +6,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import veganiseLogo from "../../Assets/veganiseLogo.jpeg";
 
 import RegistrationModal from "../Registration/RegistrationModal";
-import LoginModal from "../../LoginModal/LoginModal";
+import LoginModal from "../LoginModal/LoginModal";
 
 const Navbar = ({ navigate }) => {
   const [searchQuery, setSearchQuery] = useState("");

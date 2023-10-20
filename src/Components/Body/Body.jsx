@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import veganBurger from "../../Assets/veganBurger.svg";
 import mohito from "../../Assets/mohito.png";
@@ -15,8 +15,17 @@ import { BsPlus } from "react-icons/bs";
 import { BsArrowRightShort } from "react-icons/bs";
 import veganBurgers from "../../Assets/veganBurgers.jpg";
 import { AiFillStar } from "react-icons/ai";
+import RestaurantCard from "../RestaurantCard/restaurantCard.jsx";
+import { fetchRestaurantData } from "../../api.js";
 
 const Body = () => {
+  const [restaurantData, setRestaurantData] = useState([]);
+
+  useEffect(() => {
+    fetchRestaurantData()
+      .then((data) => setRestaurantData(data))
+      .catch((error) => console.error("Error", error));
+  }, []);
   return (
     <div className=" bg-bodyBg w-full p-16 pl-6 ">
       {/* Title Section */}
@@ -233,37 +242,20 @@ const Body = () => {
 
         <div className="restaurantContainer py-8 flex justify-between items-center">
           {/* Restaurant 1 */}
-          <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorThree p-3 rounded-[10px] mr-4">
-            <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
-              <img
-                src={veganBurgers}
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <h1 className="restaurantName block text-center font-bold opacity-90 pt-4">
-              Mildreds
-            </h1>
-            <small className="block text-center text-[#808080] font-medium">
-              International Cuisine
-            </small>
-            <div className="info mt-5 flex justify-center items-center ">
-              <div className="singleInfo border-x-2 grid px-3">
-                <AiFillStar className="flex mt-auto justify-center items-center" />
-                <h4 className="font-semibold ">3.4</h4>
-              </div>
-
-              <div className="singleInfo border-x-2 grid px-3">
-                <AiFillStar className="flex mt-auto justify-center items-center" />
-                <h4 className="font-semibold ">3.4</h4>
-              </div>
-              <div className="singleInfo border-x-2 grid px-3">
-                <AiFillStar className="flex mt-auto justify-center items-center" />
-                <h4 className="font-semibold ">3.4</h4>
-              </div>
-            </div>
-          </div>
+          {restaurantData.map((business, index) => (
+            <RestaurantCard
+              key={index}
+              name={business.name}
+              rating={business.rating}
+              reviewCount={business.review_count}
+              categories={business.categories}
+              location={business.location}
+              hours={business.hours[0].open}
+              image_url={business.image_url}
+              price={business.price}
+              is_closed={business.is_closed}
+            />
+          ))}
 
           {/* Restaurant 2 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorTwo p-3 rounded-[10px] mr-4">
