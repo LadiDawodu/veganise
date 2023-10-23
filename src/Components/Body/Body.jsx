@@ -16,7 +16,7 @@ import { BsArrowRightShort } from "react-icons/bs";
 import veganBurgers from "../../Assets/veganBurgers.jpg";
 import { AiFillStar } from "react-icons/ai";
 import RestaurantCard from "../RestaurantCard/restaurantCard.jsx";
-import { fetchRestaurantData } from "../../api.js";
+import { fetchRestaurantData } from "../../apiProduction";
 
 const Body = () => {
   const [restaurantData, setRestaurantData] = useState([]);
