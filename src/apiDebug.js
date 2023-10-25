@@ -3,9 +3,9 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 import axios from "axios";
 
 const apiKey =
-  "1GKURvM9ZWszEO-4coZ4v2c9AfuhzkFIu7ygg0Tng5OvmP2gF6slwVrYLOCCNz4_6WzAzpzMIYD1wRIWOdJm-FLppBxG4KfGa9XabPF62QsXw2ti374Ll8OqU0oxZXYx";
+  "qT3mwGWwmIY8qsU4b7ElZLBdY9EZ5qJDrz-m8i236Rnfmj-MeiVtP_c7Y4C6BUl3Hy19pb0KUj62oeCLD7moEesIG4M1sLvr17FEY4Q7yUdfOQoZaq8IcKdRabc3ZXYx";
 const location = "London";
-const term = "Vegan Restaurant";
+const term = "Vegan";
 const categories = "Vegan";
 
 // Initialize a cache object for restaurant data and open times

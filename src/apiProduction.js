@@ -1,41 +1,57 @@
 import axios from "axios";
 
+// Define your API endpoint URL
+const apiUrl = "https://api.yelp.com/v3/businesses/search";
+
+// Define your API key
 const apiKey =
-  "1GKURvM9ZWszEO-4coZ4v2c9AfuhzkFIu7ygg0Tng5OvmP2gF6slwVrYLOCCNz4_6WzAzpzMIYD1wRIWOdJm-FLppBxG4KfGa9XabPF62QsXw2ti374Ll8OqU0oxZXYx";
-const location = "London";
-const term = "Vegan Restaurant";
-const categories = "Vegan";
+  "2n_T11KN6acX6xRKB13dEcY8W_pHKqVYUfMVhmBBLzyEglfzS2cYKPy8enXiIq-igD6iDPJHdEoBhhHx1T6oW7xhKH05axyWeAZnOdN86HqOFFCfX9nU-No2yv04ZXYx";
+
+// Define your request parameters
+const apiParams = {
+  location: "London",
+  term: "restaurants",
+  categories: "vegan",
+  price: "1,2,3,4",
+  sort_by: "review_count",
+  limit: 30,
+};
 
 // Initialize a cache object for restaurant data and open times
 const restaurantDataCache = {};
 const openTimesCache = {};
 
 export const fetchRestaurantData = async () => {
-  const apiUrl = `https://api.yelp.com/v3/businesses/search?location=${encodeURIComponent(
-    location
-  )}&term=${encodeURIComponent(term)}&categories=${encodeURIComponent(
-    categories
-  )}`;
+  const apiUrlWithParams = `${apiUrl}?location=${encodeURIComponent(
+    apiParams.location
+  )}&term=${encodeURIComponent(apiParams.term)}&categories=${encodeURIComponent(
+    apiParams.categories
+  )}&price=${encodeURIComponent(apiParams.price)}&sort_by=${encodeURIComponent(
+    apiParams.sort_by
+  )}&limit=${apiParams.limit}`;
+
+  let restaurants;
 
   try {
-    if (restaurantDataCache[apiUrl]) {
+    /*if (restaurantDataCache[apiUrlWithParams]) {
       // If restaurant data is available in the cache, use it
-      return restaurantDataCache[apiUrl];
-    } else {
-      // Otherwise, make the API request for restaurant data
-      const response = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-        },
-      });
+      console.log("Restaurant data from cache");
+      restaurants = restaurantDataCache[apiUrlWithParams];
 
-      const restaurants = response.data.businesses;
+      return restaurants;
+    } else {*/
+    // Otherwise, make the API request for restaurant data
 
-      // Store the restaurant data in the cache
-      restaurantDataCache[apiUrl] = response.data;
+    const response = await axios.get(apiUrlWithParams, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
 
-      return response.data;
-    }
+    // Store the restaurant data in the cache
+    // restaurantDataCache[apiUrlWithParams] = response.data;
+    console.log(response);
   } catch (error) {
     console.error("Error fetching restaurant data", error);
   }
@@ -54,6 +70,7 @@ async function fetchOpenTimes(businessId) {
       const hoursResponse = await axios.get(hoursUrl, {
         headers: {
           Authorization: `Bearer ${apiKey}`,
+          "Access-Control-Allow-Origin": "*",
         },
       });
 

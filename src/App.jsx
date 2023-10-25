@@ -12,29 +12,15 @@ import RegistrationModal from "./Components/Registration/RegistrationModal.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import { auth } from "./firebase.jsx";
 import axios from "axios";
+import { fetchRestaurantData } from "./apiProduction.js";
+import RestaurantList from "./Components/RestaurantCard/restaurantList.jsx";
 
 function App() {
-  const [restaurantData, setRestaurantData] = useState([]);
-
-  useEffect(() => {
-    const apiUrl =
-      "https://api.yelp.com/v3/businesses/search?location=London&term=Vegan Restaurant&categories=Vegan";
-
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log(response.data);
-
-        setRestaurantData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data", error);
-      });
-  }, []);
-
   const [authenticated, setAuthenticated] = useState(null);
 
   useEffect(() => {
+    // Fetch restaurant data when the component mount
+    // Check authentication state
     const unsubscribe = auth.onAuthStateChanged((user) => {
       console.debug("user has changed", user);
       if (user) {
@@ -51,7 +37,9 @@ function App() {
     console.log("no user");
     return <p>Woow...</p>;
   }
+
   console.log("authenticated:", authenticated);
+
   return (
     <Router>
       <div>
@@ -61,15 +49,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Container />}>
               {/* Nested routes */}
-              <Route
-                index
-                element={
-                  <Body
-                    authenticated={authenticated}
-                    restaurantData={restaurantData}
-                  />
-                }
-              />
+              <Route index element={<Body authenticated={authenticated} />} />
 
               <Route
                 path="/menu"

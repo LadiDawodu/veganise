@@ -1,38 +1,55 @@
 const express = require("express");
-const cors = require("cors");
-const api = require("./apiProduction.js");
+const axios = require("axios");
+// const cors = require("cors");
+
 const app = express();
-const { createProxyMiddleware } = require("http-proxy-middleware");
-const port = process.env.PORT || 5173;
+const port = process.env.PORT || 3001;
+// Define your API endpoint URL
+const apiUrl = "https://api.yelp.com/v3/businesses/search";
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+// Define your API key
+const apiKey =
+  "2n_T11KN6acX6xRKB13dEcY8W_pHKqVYUfMVhmBBLzyEglfzS2cYKPy8enXiIq-igD6iDPJHdEoBhhHx1T6oW7xhKH05axyWeAZnOdN86HqOFFCfX9nU-No2yv04ZXYx";
 
-app.get("/api/restaurantData", async (req, res) => {
+const params = {
+  location: "London",
+  term: "restaurants",
+  categories: "vegan",
+  price: "1,2,3,4",
+  sort_by: "review_count",
+  limit: 30,
+};
+
+const corsOptions = {
+  origin: "http://localhost:5173", // Change this to the actual URL of your frontend app
+  methods: "GET",
+  optionsSuccessStatus: 204,
+};
+
+// app.use(cors(corsOptions));
+
+app.get("/yelp-api", async (req, res) => {
   try {
-    const restaurantData = await api.fetchRestaurantData();
-    res.json(restaurantData);
+    const response = await axios.get(apiUrl, {
+      params: req.query,
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    res.json(response.data);
   } catch (error) {
-    console.log("Error fetching", error);
-    res.status(500).json({ error: "An error while fetching restaurant data " });
+    console.error("Error fetching Yelp data:", error);
+    res.status(500).json({ error: "An error occurred while fetching data." });
   }
 });
+// Define your request parameters
 
-app.get("/api/openTimes/:businessId", async (req, res) => {
-  const businessId = req.params.businessId;
+// Set the request headers with your API key
 
-  try {
-    const openTimes = await api.fetchOpenTimesForRestaurant(businessId);
-    res.json(openTimes);
-  } catch (error) {
-    console.error("Error fetching open times", error);
-    res.status(500).json({ error: "An error occured" });
-  }
-});
+// Make the GET request
 
 app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
