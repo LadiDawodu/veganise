@@ -16,70 +16,12 @@ import { BsArrowRightShort } from "react-icons/bs";
 import veganBurgers from "../../Assets/veganBurgers.jpg";
 import { AiFillStar } from "react-icons/ai";
 import RestaurantCard from "../RestaurantCard/restaurantCard.jsx";
-import { fetchRestaurantData } from "../../apiProduction";
-import RestaurantList from "../RestaurantCard/restaurantList";
-import axios from "axios";
+//import { fetchRestaurantData } from "../../apiProduction.mjs";
+//import RestaurantList from "../RestaurantCard/restaurantList";
+import axios from "@bundled-es-modules/axios/axios.js";
+//import { AxiosInstance } from "axios";
 
 const Body = () => {
-  const [restaurantData, setRestaurantData] = useState([]);
-
-  useEffect(() => {
-    const apiParams = {
-      location: "London",
-      term: "restaurants",
-      categories: "vegan",
-      price: "1,2,3,4",
-      sort_by: "review_count",
-      limit: 30,
-    };
-    const apiUrl = "https://api.yelp.com/v3/businesses/search";
-    const apiKey =
-      "2n_T11KN6acX6xRKB13dEcY8W_pHKqVYUfMVhmBBLzyEglfzS2cYKPy8enXiIq-igD6iDPJHdEoBhhHx1T6oW7xhKH05axyWeAZnOdN86HqOFFCfX9nU-No2yv04ZXYx";
-
-    const fetchRestaurantData = async () => {
-      const apiUrlWithParams = `${apiUrl}?location=${encodeURIComponent(
-        apiParams.location
-      )}&term=${encodeURIComponent(
-        apiParams.term
-      )}&categories=${encodeURIComponent(
-        apiParams.categories
-      )}&price=${encodeURIComponent(
-        apiParams.price
-      )}&sort_by=${encodeURIComponent(apiParams.sort_by)}&limit=${
-        apiParams.limit
-      }`;
-
-      let restaurants;
-
-      try {
-        /*if (restaurantDataCache[apiUrlWithParams]) {
-          // If restaurant data is available in the cache, use it
-          console.log("Restaurant data from cache");
-          restaurants = restaurantDataCache[apiUrlWithParams];
-    
-          return restaurants;
-        } else {*/
-        // Otherwise, make the API request for restaurant data
-
-        const response = await axios.get(apiUrlWithParams, {
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Access-Control-Allow-Origin": "*",
-          },
-        });
-
-        // Store the restaurant data in the cache
-        // restaurantDataCache[apiUrlWithParams] = response.data;
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching restaurant data", error);
-      }
-    };
-
-    fetchRestaurantData();
-    //.then((data) => setRestaurantData(data))
-    //  .catch((error) => console.error("Error", error));
-  });
   return (
     <div className=" bg-bodyBg w-full p-16 pl-6 ">
       {/* Title Section */}
@@ -296,20 +238,36 @@ const Body = () => {
 
         <div className="restaurantContainer py-8 flex justify-between items-center">
           {/* Restaurant 1 */}
-          {restaurantData.map((business, index) => (
-            <RestaurantList
-              key={index}
-              name={business.name}
-              rating={business.rating}
-              reviewCount={business.review_count}
-              categories={business.categories}
-              location={business.location}
-              hours={business.hours[0].open}
-              image_url={business.image_url}
-              price={business.price}
-              is_closed={business.is_closed}
-            />
-          ))}
+          <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorTwo p-3 rounded-[10px] mr-4">
+            <div className="imgDiv h-[130px] w-full overflow-hidden rounded-md">
+              <img
+                src={veganBurgers}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h1 className="restaurantName block text-center font-bold opacity-90 pt-4">
+              Mildreds
+            </h1>
+            <small className="block text-center text-[#808080] font-medium">
+              International Cuisine
+            </small>
+            <div className="info mt-5 flex justify-center items-center ">
+              <div className="singleInfo border-x-2 grid px-3">
+                <AiFillStar className="flex mt-auto justify-center items-center" />
+                <h4 className="font-semibold ">3.4</h4>
+              </div>
+
+              <div className="singleInfo border-x-2 grid px-3">
+                <AiFillStar className="flex mt-auto justify-center items-center" />
+                <h4 className="font-semibold ">3.4</h4>
+              </div>
+              <div className="singleInfo border-x-2 grid px-3">
+                <AiFillStar className="flex mt-auto justify-center items-center" />
+                <h4 className="font-semibold ">3.4</h4>
+              </div>
+            </div>
+          </div>
 
           {/* Restaurant 2 */}
           <div className="singleRestaurant w-[calc(33.33% - 20px)] bg-colorTwo p-3 rounded-[10px] mr-4">

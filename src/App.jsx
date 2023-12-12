@@ -12,8 +12,8 @@ import RegistrationModal from "./Components/Registration/RegistrationModal.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import { auth } from "./firebase.jsx";
 import axios from "axios";
-import { fetchRestaurantData } from "./apiProduction.js";
-import RestaurantList from "./Components/RestaurantCard/restaurantList.jsx";
+//import { fetchRestaurantData } from "./apiProduction.mjs";
+//import RestaurantList from "./Components/RestaurantCard/restaurantList.jsx";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
@@ -35,7 +35,7 @@ function App() {
 
   if (authenticated === undefined) {
     console.log("no user");
-    return <p>Woow...</p>;
+    return "Woow";
   }
 
   console.log("authenticated:", authenticated);
@@ -67,4 +67,4 @@ function App() {
   );
 }
 
-export default App;
+export { App };

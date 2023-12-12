@@ -5,8 +5,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import veganiseLogo from "../../Assets/veganiseLogo.jpeg";
 
-import RegistrationModal from "../Registration/RegistrationModal";
-import LoginModal from "../LoginModal/LoginModal";
+import RegistrationModal from "../Registration/RegistrationModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
 
 const Navbar = ({ navigate }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -55,12 +55,6 @@ const Navbar = ({ navigate }) => {
                   <div className=" flex justify-center">
                     {/* NAV ITEMS */}
                     <div className="flex space-x-4 mt-2">
-                      <a
-                        href="#"
-                        className="text-gray-600 transition-colors duration-700 ease-in-out hover:bg-[#808000] hover:text-white rounded-full px-3 py-2 text-sm font-medium border-2 border-colorTwo/75 "
-                      >
-                        Home
-                      </a>
                       <a
                         href="#"
                         className="text-gray-600 transition-colors duration-700 ease-in-out hover:bg-[#808000] hover:text-white rounded-full px-3 py-2 text-sm font-medium border-2 border-colorTwo/75"
